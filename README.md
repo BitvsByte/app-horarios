@@ -1,4 +1,4 @@
-# 📅 **Gestor de Horarios para Restaurante**
+# 📅 **Gestor de Horarios para una Empresa**
 
 ## Descripción del Proyecto 🚀
 
