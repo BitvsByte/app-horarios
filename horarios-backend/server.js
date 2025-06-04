@@ -61,10 +61,19 @@ if (process.env.NODE_ENV !== 'test') {
   connectDB().then(() => {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`Servidor ejecutándose en el puerto ${PORT}`);
       console.log(`Modo: ${process.env.NODE_ENV || 'development'}`);
     });
+
+    // Manejo de errores no capturados
+    process.on('unhandledRejection', (err) => {
+      console.error('Error no manejado:', err);
+      // Cerrar servidor y salir del proceso
+      server.close(() => process.exit(1));
+    });
   });
+});
 }
 
 // Manejo de errores no capturados

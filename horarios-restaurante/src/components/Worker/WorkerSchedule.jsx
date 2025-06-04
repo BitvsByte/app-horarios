@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const WorkerSchedule = () => {
- const [setSchedules] = useState([]);
+ const [schedules, setSchedules] = useState([]);
  const [message, setMessage] = useState('');
  const [view, setView] = useState('monthly');
 
