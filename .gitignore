@@ -1,0 +1,10 @@
+ # Node modules
+horario-restaurante/node_modules/
+horario-backend/node_modules/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
