@@ -4,13 +4,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const errorHandler = require('./src/middleware/errorHandler');
 
-const app = express(); 
+const app = express();
 
 // Middlewares globales
 app.use(cors());
 app.use(express.json());
 
-// Importar rutas - todas desde src/routes
+// Rutas
 const authRoutes = require('./src/routes/authRoutes');
 const scheduleRoutes = require('./src/routes/scheduleRoutes');
 const userRoutes = require('./src/routes/userRoutes');
@@ -24,15 +24,15 @@ app.use('/api/users', userRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/messages', messageRoutes);
 
-// Middleware de manejo de errores global
+// Manejo de errores global
 app.use(errorHandler);
 
-// Error handling para rutas no encontradas
+// Ruta no encontrada
 app.use((req, res) => {
   res.status(404).json({ message: 'Ruta no encontrada' });
 });
 
-// Error handling global
+// Manejo de errores internos
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
@@ -41,47 +41,34 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Conectar a la base de datos MongoDB
+// Conexión a MongoDB
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    await mongoose.connect(process.env.MONGO_URI); // Asegúrate que tu .env tenga MONGO_URI
     console.log('MongoDB conectado exitosamente');
   } catch (err) {
     console.error('Error al conectar con MongoDB:', err.message);
-    // Salir del proceso con fallo
     process.exit(1);
   }
 };
 
-// Iniciar el servidor solo si no es un test
+// Iniciar servidor (excepto en entorno de test)
 if (process.env.NODE_ENV !== 'test') {
   connectDB().then(() => {
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
+    const PORT = process.env.PORT || 5001;
+
     const server = app.listen(PORT, () => {
       console.log(`Servidor ejecutándose en el puerto ${PORT}`);
       console.log(`Modo: ${process.env.NODE_ENV || 'development'}`);
     });
 
-    // Manejo de errores no capturados
+    // Capturar errores no manejados
     process.on('unhandledRejection', (err) => {
       console.error('Error no manejado:', err);
-      // Cerrar servidor y salir del proceso
       server.close(() => process.exit(1));
     });
   });
-});
 }
 
-// Manejo de errores no capturados
-process.on('unhandledRejection', (err) => {
-  console.error('Error no manejado:', err);
-  // Cerrar servidor y salir del proceso
-  server.close(() => process.exit(1));
-});
-
-// Exportar para tests
+// Exportar app para testing
 module.exports = app;
