@@ -21,7 +21,7 @@ const WorkersList = ({ onWorkerSelect }) => {
   const fetchWorkers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/users', {
+      const response = await fetch('http://localhost:5001/api/users', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ const WorkersList = ({ onWorkerSelect }) => {
   const handleCreateWorker = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/users', {
+      const response = await fetch('http://localhost:5001/api/users', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -71,7 +71,7 @@ const WorkersList = ({ onWorkerSelect }) => {
   const handleEditWorker = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/users/${editWorker.id}`, {
+      const response = await fetch(`http://localhost:5001/api/users/${editWorker.id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -96,7 +96,7 @@ const WorkersList = ({ onWorkerSelect }) => {
   const handleDeleteWorker = async (workerId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/users/${workerId}`, {
+      const response = await fetch(`http://localhost:5001/api/users/${workerId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

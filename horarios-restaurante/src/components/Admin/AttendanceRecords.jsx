@@ -21,7 +21,7 @@ const AttendanceRecords = () => {
     const fetchRecords = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:5000/api/attendance/records');
+        const response = await axios.get('http://localhost:5001/api/attendance/records');
         setRecords(response.data);
         setFilteredRecords(response.data);
         setError(null);

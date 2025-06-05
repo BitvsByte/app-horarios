@@ -25,7 +25,7 @@ const WorkerDashboard = () => {
 
   const sendMessage = async () => {
     try {
-      await axios.post('http://localhost:5000/api/messages', {
+      await axios.post('http://localhost:5001/api/messages', {
         content: message,
         from: user.id,
         to: '6751e0b8716a7b29158407e4'

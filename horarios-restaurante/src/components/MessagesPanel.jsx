@@ -22,7 +22,7 @@ const MessagesPanel = ({ className }) => {
         throw new Error('No hay token de autenticación');
       }
 
-      const response = await fetch('http://localhost:5000/api/messages', {
+      const response = await fetch('http://localhost:5001/api/messages', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ const MessagesPanel = ({ className }) => {
         throw new Error('No hay token de autenticación');
       }
 
-      const response = await fetch(`http://localhost:5000/api/messages/${messageId}`, {
+      const response = await fetch(`http://localhost:5001/api/messages/${messageId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

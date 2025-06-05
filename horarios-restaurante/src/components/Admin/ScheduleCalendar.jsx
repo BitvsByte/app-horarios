@@ -49,7 +49,7 @@ function ScheduleCalendar({ selectedMonth, selectedYear, selectedWorker, isWorke
       }
 
       const response = await axios.get(
-        `http://localhost:5000/api/schedules/worker/${selectedWorker._id}`, 
+        `http://localhost:5001/api/schedules/worker/${selectedWorker._id}`, 
         {
           params: {
             month: selectedMonth,
@@ -111,7 +111,7 @@ function ScheduleCalendar({ selectedMonth, selectedYear, selectedWorker, isWorke
       };
 
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/schedules', shiftData, {
+      await axios.post('http://localhost:5001/api/schedules', shiftData, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -148,7 +148,7 @@ function ScheduleCalendar({ selectedMonth, selectedYear, selectedWorker, isWorke
       };
 
       await axios.put(
-        `http://localhost:5000/api/schedules/shift/${shiftId}`,
+        `http://localhost:5001/api/schedules/shift/${shiftId}`,
         updatedData,
         {
           headers: {
@@ -179,7 +179,7 @@ function ScheduleCalendar({ selectedMonth, selectedYear, selectedWorker, isWorke
       const token = localStorage.getItem('token');
   
       await axios.delete(
-        `http://localhost:5000/api/schedules/shift/${shiftId}`,
+        `http://localhost:5001/api/schedules/shift/${shiftId}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -207,7 +207,7 @@ function ScheduleCalendar({ selectedMonth, selectedYear, selectedWorker, isWorke
       const token = localStorage.getItem('token');
 
       await axios.post(
-        'http://localhost:5000/api/attendance/clock-in',
+        'http://localhost:5001/api/attendance/clock-in',
         {
           workerId: selectedWorker._id
         },
@@ -234,7 +234,7 @@ function ScheduleCalendar({ selectedMonth, selectedYear, selectedWorker, isWorke
       const token = localStorage.getItem('token');
 
       await axios.post(
-        'http://localhost:5000/api/attendance/clock-out',
+        'http://localhost:5001/api/attendance/clock-out',
         {
           workerId: selectedWorker._id
         },

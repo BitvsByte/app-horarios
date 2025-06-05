@@ -10,7 +10,7 @@ const ScheduleManagement = () => {
     const fetchSchedules = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('http://localhost:5000/api/schedules');
+        const res = await axios.get('http://localhost:5001/api/schedules');
         setSchedules(Array.isArray(res.data) ? res.data : []);  // Asegurar que es un array
         setError(null);
       } catch (error) {
