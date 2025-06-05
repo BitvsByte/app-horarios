@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const { validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 // Obtener el perfil del usuario autenticado
 const getProfile = (req, res, next) => {
@@ -46,9 +47,13 @@ const updateUser = async (req, res, next) => {
   }
 
   try {
+    const updates = { ...req.body };
+    if (updates.password) {
+      updates.password = await bcrypt.hash(updates.password, 10);
+    }
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updates,
       { new: true, runValidators: true }
     ).select('-password');
 
@@ -87,7 +92,7 @@ const createUser = async (req, res, next) => {
   }
 
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // Verificar si el usuario ya existe
     const existingUser = await User.findOne({ email });
@@ -96,7 +101,8 @@ const createUser = async (req, res, next) => {
     }
 
     // Crear el usuario
-    const newUser = new User({ name, email, password });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ name, email, password: hashedPassword, role });
     await newUser.save();
 
     res.status(201).json({ message: 'User created successfully', user: newUser });
